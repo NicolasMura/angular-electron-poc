@@ -2,13 +2,23 @@
   "name": "poc-visagisme-angular-cli-electron",
   "productName": "Visagisme Electron POC",
   "version": "1.0.0",
-  "main": "electron/dist/main.js",
+  "main": "./electron/dist/main.js",
   "license": "MIT",
-  "author": "Nicolas MURA",
-  "description": "Electron POC with Angular for Visagisme app",
+  "author": {
+    "name": "Nicolas MURA",
+    "email": "contact@nicolasmura.fr"
+  },
+  "description": "Electron POC with Angular",
+  "keywords": [
+    "angular",
+    "angular 8",
+    "electron",
+    "typescript",
+    "sass"
+  ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:zentotechnologie/poc-visagisme-angular-cli-electron.git"
+    "url": "git@github.com:NicolasMura/angular-electron-poc.git"
   },
   "scripts": {
     "ng": "./node_modules/@angular/cli/bin/ng",
@@ -18,18 +28,18 @@
     "lint": "./node_modules/@angular/cli/bin/ng lint",
     "e2e": "./node_modules/@angular/cli/bin/ng e2e",
     "compodoc": "compodoc -p src/tsconfig.app.json",
-    "electron": "ng build --base-href ./ && tsc --p electron && electron .",
+    "electron": "./node_modules/@angular/cli/bin/ng build --base-href ./ && tsc --p electron && electron .",
     "package:app": "electron-packager . --version-string.ProductName=\"MyAppName\" --platform=win32 --arch=x64 --out=release/package --overwrite",
     "package:installer": "DEBUG=electron-windows-installer:main node ./createWindowsInstaller.js",
-    "package": "ng build --base-href ./ && npm run package:app && npm run package:installer",
+    "package": "./node_modules/@angular/cli/bin/ng build --base-href ./ && npm run package:app && npm run package:installer",
     "osx": "electron-packager . --version-string.ProductName=\"MyAppName\" --platform=darwin --arch=x64 --out=release/package --overwrite",
-    "package-mac": "ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds --darwinDarkModeSupport=true",
-    "package-win": "ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
-    "package-linux": "ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "package-mac": "./node_modules/@angular/cli/bin/ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds --darwinDarkModeSupport=true",
+    "package-win": "./node_modules/@angular/cli/bin/ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
+    "package-linux": "./node_modules/@angular/cli/bin/ng build --base-href ./ && tsc --p electron && electron-packager . poc-visagisme --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/poc-visagisme-darwin-x64/poc-visagisme.app poc-visagisme --out=release-builds --overwrite --icon=assets/icons/mac/icon.icns",
     "create-installer-win": "node installers/windows/createinstaller.js",
     "create-debian-installer": "electron-installer-debian --src release-builds/poc-visagisme-linux-x64/ --arch amd64 --config debian.json",
-    "deploy": "ng build --base-href ./ && ./deploy"
+    "deploy": "./node_modules/@angular/cli/bin/ng build --base-href ./ && ./deploy"
   },
   "private": true,
   "dependencies": {
@@ -53,10 +63,13 @@
     "@angular/cli": "8.0.3",
     "@angular/compiler-cli": "8.0.1",
     "@angular/language-service": "8.0.1",
-    "@types/node": "8.9.4",
+    "@types/electron": "1.6.10",
     "@types/jasmine": "3.3.8",
     "@types/jasminewd2": "2.0.3",
+    "@types/node": "8.9.4",
     "codelyzer": "5.0.0",
+    "electron": "6.0.11",
+    "electron-reload": "1.5.0",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "4.1.0",
