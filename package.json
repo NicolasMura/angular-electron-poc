@@ -14,7 +14,7 @@
     "angular 8",
     "electron",
     "typescript",
-    "sass"
+    "scss"
   ],
   "repository": {
     "type": "git",
@@ -22,12 +22,12 @@
   },
   "scripts": {
     "ng": "./node_modules/@angular/cli/bin/ng",
-    "start": "./node_modules/@angular/cli/bin/ng serve",
+    "start": "./node_modules/@angular/cli/bin/ng serve -o",
     "build": "./node_modules/@angular/cli/bin/ng build",
     "test": "./node_modules/@angular/cli/bin/ng test",
     "lint": "./node_modules/@angular/cli/bin/ng lint",
     "e2e": "./node_modules/@angular/cli/bin/ng e2e",
-    "compodoc": "compodoc -p src/tsconfig.app.json",
+    "compodoc": "compodoc -p tsconfig.app.json",
     "electron": "./node_modules/@angular/cli/bin/ng build --base-href ./ && tsc --p electron && electron .",
     "package:app": "electron-packager . --version-string.ProductName=\"MyAppName\" --platform=win32 --arch=x64 --out=release/package --overwrite",
     "package:installer": "DEBUG=electron-windows-installer:main node ./createWindowsInstaller.js",
@@ -63,6 +63,7 @@
     "@angular/cli": "8.0.3",
     "@angular/compiler-cli": "8.0.1",
     "@angular/language-service": "8.0.1",
+    "@compodoc/compodoc": "1.1.10",
     "@types/electron": "1.6.10",
     "@types/jasmine": "3.3.8",
     "@types/jasminewd2": "2.0.3",
