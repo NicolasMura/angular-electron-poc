@@ -65,4 +65,44 @@
 </div> -->
 </div>
 
-<router-outlet></router-outlet>
+<main class="root__container" [ngClass]="{'root__container-dark': darkModeActive}">
+  <header [ngClass]="{'main__header-dark': darkModeActive}" class="main__header">
+
+    <div class="left__section">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve" class="logo__icon" >
+        <style type="text/css">
+          .st0{fill:#DD0031;}
+          .st1{fill:#C3002F;}
+          .st2{fill:#FFFFFF;}
+        </style>
+        <g>
+          <polygon class="st0" points="125,30 125,30 125,30 31.9,63.2 46.1,186.3 125,230 125,230 125,230 203.9,186.3 218.1,63.2  "/>
+          <polygon class="st1" points="125,30 125,52.2 125,52.1 125,153.4 125,153.4 125,230 125,230 203.9,186.3 218.1,63.2 125,30  "/>
+          <path class="st2" d="M125,52.1L66.8,182.6h0h21.7h0l11.7-29.2h49.4l11.7,29.2h0h21.7h0L125,52.1L125,52.1L125,52.1L125,52.1   L125,52.1z M142,135.4H108l17-40.9L142,135.4z"/>
+        </g>
+      </svg>
+    </div>
+
+    <h3 class="date__text">Poc Visagisme</h3>
+
+    <div class="mode-toggle__container">
+      <span style="padding-right: 10px">LIGHT</span>
+      <mat-slide-toggle
+          class="example-margin"
+          [color]="color"
+          [checked]="darkModeActive"
+          (change)="modeToggleSwitch()">
+      </mat-slide-toggle>
+      <span style="padding-left: 10px">DARK</span>
+    </div>
+
+  </header>
+
+  <!-- Main Content -->
+
+  <div class="main-container__bg">
+    <router-outlet></router-outlet>
+  </div>
+
+
+</main>

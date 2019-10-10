@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { UiService } from './services/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -29,13 +30,30 @@ import { trigger, transition, style, animate } from '@angular/animations';
     )
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-electron-poc';
   isLoading: boolean = true;
+  darkModeActive: boolean;
+  sub1;
 
-  public constructor() {
+  // styling
+  color = 'accent';
+
+  public constructor(
+    public ui: UiService
+  ) {
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 0);
+  }
+
+  ngOnInit() {
+    this.sub1 = this.ui.darkModeState.subscribe((value) => {
+      this.darkModeActive = value;
+    });
+  }
+
+  modeToggleSwitch() {
+    this.ui.darkModeState.next(!this.darkModeActive);
   }
 }
