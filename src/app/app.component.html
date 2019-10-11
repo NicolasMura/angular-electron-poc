@@ -1,75 +1,8 @@
-<div *ngIf="isLoading" class="loader-wrapper" [@inOutAnimation]>
-<!-- <div class='loader loader1'>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class='loader loader2'>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<div class='loader loader3'>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- <div class='loader loader4'>
-  <div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <div>
-              <div>
-                <div>
-                  <div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-</div>
-
-<main class="root__container" [ngClass]="{'root__container-dark': darkModeActive}">
-  <header [ngClass]="{'main__header-dark': darkModeActive}" class="main__header">
+<div class="root__container" [ngClass]="{'root__container-dark': darkModeActive}">
+  <header *ngIf="isHeaderVisible" [ngClass]="{'main__header-dark': darkModeActive}" class="main__header">
 
     <div class="left__section">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve" class="logo__icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve" class="" >
         <style type="text/css">
           .st0{fill:#DD0031;}
           .st1{fill:#C3002F;}
@@ -83,9 +16,11 @@
       </svg>
     </div>
 
-    <h3 class="date__text">Poc Visagisme</h3>
+    <div class="center__section">
+      <h3 class="app-name">Poc Visagisme</h3>
+    </div>
 
-    <div class="mode-toggle__container">
+    <div class="right__section">
       <span style="padding-right: 10px">LIGHT</span>
       <mat-slide-toggle
           class="example-margin"
@@ -99,10 +34,8 @@
   </header>
 
   <!-- Main Content -->
-
-  <div class="main-container__bg">
-    <router-outlet></router-outlet>
-  </div>
-
-
-</main>
+  <main [@slideInAnimation]="o && o.activatedRouteData && o.activatedRouteData['animation']">
+    <router-outlet #o="outlet"></router-outlet>
+  </main>
+  <!-- Main Content -->
+</div>

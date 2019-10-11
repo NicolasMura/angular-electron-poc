@@ -1,0 +1,74 @@
+<div class="screensaver__container">
+  <!-- Loading... -->
+  <div *ngIf="isLoading" class="loader-wrapper" [@inOutAnimation]>
+    <!-- <div class='loader loader1'>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div class='loader loader2'>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class='loader loader3'>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class='loader loader4'>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <!-- Loading... -->
+
+  <!-- Screen Saver -->
+  <div *ngIf="!isLoading" class="screen-saver" (tap)="goToHome()" (mousemove)="goToHome()"></div>
+  <!-- Screen Saver -->
+</div>
