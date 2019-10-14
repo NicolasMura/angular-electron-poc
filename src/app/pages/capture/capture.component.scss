@@ -1,0 +1,31 @@
+.capture__container {
+  background-color: darkcyan;
+
+  #video {
+    background-color: #000000;
+  }
+
+  #canvas {
+    display: none;
+  }
+
+  .select_devices {
+    margin-bottom: 10px;
+  }
+
+  img.picture {
+    margin-top: 10px;
+  }
+
+  .mode_local {
+    margin-bottom: 10px;
+  }
+
+  .go_button {
+    width: 140px;
+
+    mat-progress-spinner {
+      margin: 0 auto;
+    }
+  }
+}

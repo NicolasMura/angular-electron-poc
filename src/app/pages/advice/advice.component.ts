@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeAnimation } from '../../shared/animations/fade-in-out';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { VisagismeService } from 'src/app/services/visagisme/visagisme.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-advice',
@@ -31,9 +34,21 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ]
 })
 export class AdviceComponent implements OnInit {
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    public visagismeService: VisagismeService
+  ) {
+    console.log(visagismeService.capture);
+    console.log(visagismeService.faceAttributes);
+    // if ( !visagismeService.faceAttributes ) {
+    //   this.router.navigateByUrl('/capture');
+    // }
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription = this.visagismeService.getFaceAttributes().subscribe();
+  }
 
 }

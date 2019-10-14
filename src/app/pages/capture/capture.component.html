@@ -1,0 +1,72 @@
+<div class="capture__container" @inOutAnimation>
+  <a mat-raised-button routerLink="/home">Go to home</a>
+
+  <div style="text-align: center;">
+    <!-- <mat-grid-list cols="2" rowHeight="1:1" id="app"> -->
+      <!-- <mat-grid-tile> -->
+        <div style="position: relative;">
+          <video #video id="video" width="640" height="480"></video>
+          <div *ngIf="isCameraLoading" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, 50%);z-index: 100000;background: red;color: white;">Loading...</div>
+        </div>
+        <!-- </mat-grid-tile> -->
+        <!-- <mat-grid-tile> -->
+          <!-- <mat-select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" placeholder="Favorite food">
+            <mat-option *ngFor="let device of devices" [value]="device">
+              {{ device.label }}
+            </mat-option>
+          </mat-select> -->
+          <div *ngIf="selectedDevice" class="select_devices">
+            <select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" [disabled]="workInProgress">
+              <option *ngFor="let device of devices" [ngValue]="device">
+                {{ device.label }}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <!-- <button id="snap" (click)="takePicture()">Snap Photo</button> -->
+            <button id="snap" mat-raised-button color="primary" (click)="takePicture()" [disabled]="!selectedDevice || workInProgress">Prendre une photo</button>
+          </div>
+          <div>
+            <canvas #canvas id="canvas" width="640" height="480"></canvas>
+          </div>
+
+          <div>
+            <!-- <ul>
+              <li *ngFor="let c of captures">
+                <img src="{{ c }}" height="50" />
+              </li>
+            </ul> -->
+            <img class="picture" src="{{ visagismeService.capture }}" height="50" />
+          </div>
+
+          <div class="mode_local">
+            <mat-slide-toggle
+            class="example-margin"
+            [color]="accent"
+            [checked]="local"
+            [disabled]="toggleDisabled || workInProgress"
+            [(ngModel)]="local">
+            Mode local <span *ngIf="!local">OFF</span><span *ngIf="local">ON</span>
+          </mat-slide-toggle>
+        </div>
+
+        <div>
+          <!-- <button (click)="sendToIgloo()">GO</button> -->
+          <button mat-raised-button color="primary" (click)="sendToIgloo()" [disabled]="!canSendForAnalyse || workInProgress" class="go_button">
+            <div *ngIf="!workInProgress">GO</div>
+            <div *ngIf="workInProgress">
+              <mat-progress-spinner
+                class="progress-spinner"
+                diameter="36"
+                [color]="'accent'"
+                [mode]="'indeterminate'">
+              </mat-progress-spinner>
+            </div>
+          </button>
+        </div>
+
+      <!-- </mat-grid-tile> -->
+    <!-- </mat-grid-list> -->
+  </div>
+</div>

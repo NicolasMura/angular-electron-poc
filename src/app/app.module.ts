@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule, MatDialogModule, MatButtonModule } from '@angular/material';
+import { MatSlideToggleModule, MatDialogModule, MatButtonModule, MatSnackBarModule, MatSelectModule } from '@angular/material';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
@@ -25,8 +25,10 @@ import { DialogTimeoutComponent } from './services/idle/idle.service';
     MomentModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatSelectModule,
     MatDialogModule,
     MatButtonModule,
+    MatSnackBarModule,
     NgIdleKeepaliveModule.forRoot()
 
   ],

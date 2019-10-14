@@ -1,6 +1,17 @@
 <div class="advice__container" @inOutAnimation>
-  <p>
-    advice works!
-  </p>
-  <a mat-raised-button routerLink="/home">Got to home</a>
+  <div>
+    <a mat-raised-button routerLink="/capture">Go to capture</a>
+
+    <div>
+      <img class="picture" src="{{ visagismeService.capture }}" height="50" />
+    </div>
+    <ul>
+      <li style="display: block;">Race : {{ visagismeService.faceAttributes.Race }}</li>
+      <li style="display: block;">Genre : {{ visagismeService.faceAttributes.Gender }}</li>
+      <li style="display: block;">Âge : {{ visagismeService.faceAttributes.Age }}</li>
+      <li style="display: block;">Forme du visage : {{ visagismeService.faceAttributes.Visage_Forme.type }}</li>
+      <li style="display: block;">Teinte de la peau : {{ visagismeService.faceAttributes.Peau_Teinte.Color }}</li>
+      <li style="display: block;">Couleur des yeux : {{ visagismeService.faceAttributes.Yeux.Color }}</li>
+    </ul>
+  </div>
 </div>

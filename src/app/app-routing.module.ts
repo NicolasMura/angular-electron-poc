@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
-import { ScreenSaverComponent } from './pages/screen-saver/screen-saver.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AdviceComponent } from './pages/advice/advice.component';
-
 
 const routes: Routes = [
   {
@@ -14,21 +10,19 @@ const routes: Routes = [
   },
   {
     path: 'screen-saver',
-    loadChildren: './pages/screen-saver/screen-saver.module#ScreenSaverModule',
-    // data: { animation: 'ScreenSaver' },
-    // component: ScreenSaverComponent
+    loadChildren: './pages/screen-saver/screen-saver.module#ScreenSaverModule'
   },
   {
     path: 'home',
-    loadChildren: './pages/home/home.module#HomeModule',
-    // data: { animation: 'Home' },
-    // component: HomeComponent
+    loadChildren: './pages/home/home.module#HomeModule'
+  },
+  {
+    path: 'capture',
+    loadChildren: './pages/capture/capture.module#CaptureModule'
   },
   {
     path: 'advice',
-    loadChildren: './pages/advice/advice.module#AdviceModule',
-    // data: { animation: 'Advice' },
-    // component: AdviceComponent
+    loadChildren: './pages/advice/advice.module#AdviceModule'
   },
   {
     path: '**',

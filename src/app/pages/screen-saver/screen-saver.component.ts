@@ -60,7 +60,7 @@ export class ScreenSaverComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('/home');
   }
 
 }
