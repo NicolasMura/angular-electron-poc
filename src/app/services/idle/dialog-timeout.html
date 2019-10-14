@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>Inactivité</h1>
+<div mat-dialog-content>
+  <p>Attention, vous allez être redirigé vers l'accueil dans {{ data.countdown }} seconde{{ data.countdown > 1 ? 's' : '' }} !</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Annuler</button>
+</div>

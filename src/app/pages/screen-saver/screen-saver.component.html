@@ -1,6 +1,6 @@
 <div class="screensaver__container">
   <!-- Loading... -->
-  <div *ngIf="isLoading" class="loader-wrapper" [@inOutAnimation]>
+  <div *ngIf="isAppLoading && !isAppLoaded" class="loader-wrapper" [@inOutAnimation]>
     <!-- <div class='loader loader1'>
       <div>
         <div>
@@ -69,6 +69,6 @@
   <!-- Loading... -->
 
   <!-- Screen Saver -->
-  <div *ngIf="!isLoading" class="screen-saver" (tap)="goToHome()" (mousemove)="goToHome()"></div>
+  <div *ngIf="isAppLoaded" class="screen-saver" (tap)="goToHome()" (mousemove)="goToHome()"></div>
   <!-- Screen Saver -->
 </div>

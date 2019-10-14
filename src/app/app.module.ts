@@ -4,24 +4,19 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule, MatButtonModule } from '@angular/material';
+import { MatSlideToggleModule, MatDialogModule, MatButtonModule } from '@angular/material';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
-import { HomeModule } from './pages/home/home.module';
-import { HomeComponent } from './pages/home/home.component';
-import { AdviceComponent } from './pages/advice/advice.component';
-import { ScreenSaverComponent } from './pages/screen-saver/screen-saver.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 import { HttpClientModule } from '@angular/common/http';
+import { DialogTimeoutComponent } from './services/idle/idle.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    // ScreensaverComponent,
-    // HomeComponent,
-    // AdviceComponent
+    DialogTimeoutComponent
   ],
   imports: [
     BrowserModule,
@@ -30,10 +25,12 @@ import { HttpClientModule } from '@angular/common/http';
     MomentModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    // MatButtonModule,
+    MatDialogModule,
+    MatButtonModule,
     NgIdleKeepaliveModule.forRoot()
 
   ],
+  entryComponents: [DialogTimeoutComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

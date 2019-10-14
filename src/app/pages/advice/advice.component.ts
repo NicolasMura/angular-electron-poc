@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeAnimation } from '../../shared/animations/fade-in-out';
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -30,16 +30,10 @@ import { trigger, transition, style, animate } from '@angular/animations';
     )
   ]
 })
-export class AdviceComponent implements OnInit, OnDestroy {
+export class AdviceComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log('ngOnInit - AdviceComponent');
-  }
-
-  ngOnDestroy() {
-    console.log('ngOnDestroy - AdviceComponent');
-  }
+  ngOnInit() {}
 
 }
