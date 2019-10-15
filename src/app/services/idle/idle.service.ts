@@ -4,26 +4,39 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * Interface définissant le décompte en secondes de la période d'avertissement au bout de laquelle l'utilisateur est considéré comme inactif
+ */
 export interface DialogData {
   countdown: number;
 }
 
-// sets an idle timeout of x seconds
+/**
+ * Durée d'inactivité (idle timeout) de x seconds
+ */
 const dueIdle = 120;
-// sets a timeout period of y seconds. after y seconds of inactivity, the user will be considered timed out.
+/**
+ * Durée d'avertissement (timeout period) de y seconds. Après cette durée, l'utilisateur est considéré comme inactif
+ */
 const dueTimeout = 10;
 
+/**
+ * Composant gérant l'affichage de la modale d'avertissement avant redirection à l'accueil
+ */
 @Component({
   selector: 'app-dialog-timeout',
   templateUrl: 'dialog-timeout.html'
 })
 export class DialogTimeoutComponent {
+  /**
+   * Décompte en secondes de la période d'avertissement au bout de laquelle l'utilisateur est considéré comme inactif
+   */
   public countdown: number;
 
   constructor(
     public dialogRef: MatDialogRef<DialogTimeoutComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-    ) {}
+  ) {}
 
   cancel(): void {
     this.dialogRef.close();
@@ -31,6 +44,12 @@ export class DialogTimeoutComponent {
 
 }
 
+/**
+ * Service de gestion de l'inactivité de l'utilisateur
+ *
+ * Sur toutes les pages exceptées la page screen-saver (cf. {@link AppComponent}), un timer compte dueIdle secondes d'inactivité avant
+ * d'enclencher un décompte au bout duquel l'utilisateur est considéré comme inactif est redirigé vers l'accueil
+ */
 @Injectable({
   providedIn: 'root'
 })

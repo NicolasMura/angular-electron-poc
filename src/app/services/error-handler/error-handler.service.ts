@@ -1,32 +1,20 @@
-import { Injectable, Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { CustomSnackbarComponent } from 'src/app/shared/components/custom-snackbar/custom-snackbar.component';
 
-/** Component opened inside a snackbar. */
-// Countdown: {{ timeLeft$ | async }}
-// @Component({
-//   selector: 'app-countdown-snackbar',
-//   template: `
-//     Erreur: {{ error$ | async }}
-//   `
-// })
-// export class CustomSnackbarComponent {
-
-//   // timeLeft$ = this.countdown.timeLeft();
-
-//   constructor(
-//     private errorHandlerService: ErrorHandlerService
-//   ) {}
-// }
-
+/**
+ * Service de gestion des erreurs
+ *
+ * Service basique pour afficher les erreurs en frontend et les logguer (Voir un exemple d'utilisation sur {@link CaptureComponent})
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService {
 
-  error = new Subject<string>();
-  public displayedToast: any = null;
+  /**
+   *  Référence locale au Snackbar qui affiche les erreurs
+   */
   public snackBarRef: MatSnackBarRef<CustomSnackbarComponent>;
 
   constructor(private snackBar: MatSnackBar) { }

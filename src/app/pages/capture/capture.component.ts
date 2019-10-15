@@ -1,41 +1,15 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 import { VisagismeService } from 'src/app/services/visagisme/visagisme.service';
 import { Subscription } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { fadeInOutAnimation } from 'src/app/shared/animations/fade-in-out';
 
 @Component({
   selector: 'app-capture',
   templateUrl: './capture.component.html',
   styleUrls: ['./capture.component.scss'],
-  animations: [
-    // fadeAnimation,
-    // slideInAnimation,
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter', // when a DOM element is being added
-          [
-            style({ opacity: 0 }),
-            animate('1s ease-out',
-            style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave', // when a DOM element is being removed
-          [
-            style({ opacity: 1 }),
-            animate('1s ease-in',
-            style({ opacity: 0 }))
-          ]
-        )
-      ]
-    )
-  ]
+  animations: [fadeInOutAnimation]
 })
 export class CaptureComponent implements OnInit, AfterViewInit {
   @ViewChild('video', {static: true}) public video: ElementRef;
@@ -46,7 +20,6 @@ export class CaptureComponent implements OnInit, AfterViewInit {
   public errorMessages: any[] = [];
   public isCameraLoading = true;
 
-  local = false;
   canSendForAnalyse = false;
   toggleDisabled = false;
   workInProgress = false;
@@ -55,7 +28,6 @@ export class CaptureComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     public visagismeService: VisagismeService,
     public errorHandlerService: ErrorHandlerService
   ) {}
@@ -66,20 +38,20 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     let errNameForLog = '';
 
     // test de disponibilité de l'API Igloo
-    this.testIglooService()
+    this.visagismeService.testIglooService()
       .then(response => {
         // console.log(response);
       }, err => {
         errName = 'Erreur';
         errNameForLog = errName + ' (testIglooService err)';
-        errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
+        errMessage = this.visagismeService.localServer ? 'serveur (local) non disponible' : 'serveur non disponible';
         this.errorHandlerService.displayFrontError(errName, errMessage);
         this.errorHandlerService.logError(errNameForLog, errMessage, err);
       })
       .catch((err) => {
         errName = 'Erreur';
         errNameForLog = errName + ' (testIglooService catch())';
-        errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
+        errMessage = this.visagismeService.localServer ? 'serveur (local) non disponible' : 'serveur non disponible';
         this.errorHandlerService.displayFrontError(errName, errMessage);
         this.errorHandlerService.logError(errNameForLog, errMessage, err);
       });
@@ -198,7 +170,7 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     if (this.visagismeService.capture !== '') {
       this.workInProgress = true;
 
-      this.sendToIglooService(this.visagismeService.capture).then((response) => {
+      this.visagismeService.sendToIglooService(this.visagismeService.capture).then((response: any) => {
         console.log(response);
         if (response.faceAttributes) {
           console.log(JSON.parse(response.faceAttributes));
@@ -216,59 +188,12 @@ export class CaptureComponent implements OnInit, AfterViewInit {
       (err) => {
         errName = 'Erreur';
         errNameForLog = errName + ' (sendToIglooService err)';
-        errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
+        errMessage = this.visagismeService.localServer ? 'serveur (local) non disponible' : 'serveur non disponible';
         this.errorHandlerService.displayFrontError(errName, errMessage);
         this.errorHandlerService.logError(errName, errMessage, err);
         this.workInProgress = false;
       });
     }
-  }
-
-  /**
-   * Service GET HTTP sur l'API Igloo
-   * @TODO : à placer dans un service
-   *
-   * @param {string} base64picture photo au format base64
-   * @returns {Promise}
-   */
-  public sendToIglooService(base64picture: string) {
-    // console.log(window.location.href);
-    // console.log(window.location.host);
-    // console.log(window.location.hostname);
-    const host = this.local ? 'http://localhost' : 'https://artlunettev2-dev.zento.fr';
-    const url = host + '/getAttributesFromPicture';
-    return this.http.post(url, {base64picture}, {})
-      .toPromise()
-      .then(response => response)
-      .catch(this.handleError);
-  }
-
-  /**
-   * Service de test de disponibilité de l'API Igloo
-   * @TODO : à déplacer dans un service
-   * @TODO : intégrer la double authentification d’API via JWT et les Cookies
-   * (https://website.simplx.fr/blog/2016/09/27/authentification-api-via-jwt-et-cookies/)
-   *
-   * @param {void}
-   * @returns {Promise}
-   */
-  public testIglooService() {
-    const host = this.local ? 'http://localhost' : 'https://artlunettev2-dev.zento.fr';
-    const url: string = host + '/testConnexion';
-    return this.http.get(url)
-      .toPromise()
-      .then(response => response)
-      .catch(this.handleError);
-  }
-
-  /**
-   *
-   * @param {any} error
-   * @returns {Promise<void>|Promise<T>}
-   */
-  private handleError(error: any): Promise<any> {
-    // this._logger.error(error);
-    return Promise.reject(error.message || error);
   }
 
 }

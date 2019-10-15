@@ -1,4 +1,4 @@
-<div class="capture__container" @inOutAnimation>
+<div class="capture__container" @fadeInOutAnimation>
   <a mat-raised-button routerLink="/home">Go to home</a>
 
   <div style="text-align: center;">
@@ -43,10 +43,10 @@
           <div class="mode_local">
             <mat-slide-toggle
             class="example-margin"
-            [checked]="local"
+            [checked]="visagismeService.localServer"
             [disabled]="toggleDisabled || workInProgress"
-            [(ngModel)]="local">
-            Mode local <span *ngIf="!local">OFF</span><span *ngIf="local">ON</span>
+            [(ngModel)]="visagismeService.localServer">
+            Mode local <span *ngIf="!visagismeService.localServer">OFF</span><span *ngIf="visagismeService.localServer">ON</span>
           </mat-slide-toggle>
         </div>
 
