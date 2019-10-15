@@ -10,13 +10,15 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 import { HttpClientModule } from '@angular/common/http';
 import { DialogTimeoutComponent } from './services/idle/idle.service';
+import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    DialogTimeoutComponent
+    DialogTimeoutComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ import { DialogTimeoutComponent } from './services/idle/idle.service';
     NgIdleKeepaliveModule.forRoot()
 
   ],
-  entryComponents: [DialogTimeoutComponent],
+  entryComponents: [DialogTimeoutComponent, CustomSnackbarComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 {
-  "name": "poc-visagisme-angular-cli-electron",
+  "name": "angular-electron-poc",
   "productName": "Visagisme Electron POC",
   "version": "1.0.0",
   "main": "./electron/dist/main.js",
@@ -39,7 +39,7 @@
     "create-installer-mac": "electron-installer-dmg ./release-builds/poc-visagisme-darwin-x64/poc-visagisme.app poc-visagisme --out=release-builds --overwrite --icon=assets/icons/mac/icon.icns",
     "create-installer-win": "node installers/windows/createinstaller.js",
     "create-debian-installer": "electron-installer-debian --src release-builds/poc-visagisme-linux-x64/ --arch amd64 --config debian.json",
-    "deploy": "./node_modules/@angular/cli/bin/ng build --base-href ./ && ./deploy"
+    "deploy": "./node_modules/@angular/cli/bin/ng build --prod --base-href ./ && ./deploy"
   },
   "private": true,
   "dependencies": {

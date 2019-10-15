@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { VisagismeService } from 'src/app/services/visagisme/visagisme.service';
 import { Subscription } from 'rxjs';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-capture',
@@ -43,7 +44,6 @@ export class CaptureComponent implements OnInit, AfterViewInit {
   public devices: any = [];
   public selectedDevice: any = null;
   public errorMessages: any[] = [];
-  public displayedToast: any = null;
   public isCameraLoading = true;
 
   local = false;
@@ -56,8 +56,8 @@ export class CaptureComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private snackBar: MatSnackBar,
-    public visagismeService: VisagismeService
+    public visagismeService: VisagismeService,
+    public errorHandlerService: ErrorHandlerService
   ) {}
 
   public ngOnInit() {
@@ -73,15 +73,15 @@ export class CaptureComponent implements OnInit, AfterViewInit {
         errName = 'Erreur';
         errNameForLog = errName + ' (testIglooService err)';
         errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
-        this.displayFrontError(errName, errMessage, 5000);
-        this.logError(errNameForLog, errMessage, err);
+        this.errorHandlerService.displayFrontError(errName, errMessage);
+        this.errorHandlerService.logError(errNameForLog, errMessage, err);
       })
       .catch((err) => {
         errName = 'Erreur';
         errNameForLog = errName + ' (testIglooService catch())';
         errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
-        this.displayFrontError(errName, errMessage, 5000);
-        this.logError(errNameForLog, errMessage, err);
+        this.errorHandlerService.displayFrontError(errName, errMessage);
+        this.errorHandlerService.logError(errNameForLog, errMessage, err);
       });
 
     // récupération photo si dispo
@@ -133,13 +133,13 @@ export class CaptureComponent implements OnInit, AfterViewInit {
               errName = 'Erreur inconnue';
               errMessage = 'veuillez contacter le service après-vente Zen\'To.';
           }
-          this.displayFrontError(errName, errMessage);
-          this.logError(errNameForLog, errMessage, err);
+          this.errorHandlerService.displayFrontError(errName, errMessage);
+          this.errorHandlerService.logError(errNameForLog, errMessage, err);
         }).catch((err) => {
           errName = 'Erreur inconnue';
           errNameForLog = errName + ' (getUserMedia catch())';
           errMessage = '';
-          this.logError(errNameForLog, errMessage, err);
+          this.errorHandlerService.logError(errNameForLog, errMessage, err);
         });
       } else {
         navigator.mediaDevices.enumerateDevices()
@@ -157,22 +157,22 @@ export class CaptureComponent implements OnInit, AfterViewInit {
             errName = 'Aucune caméra détectée';
             errNameForLog = errName + ' (enumerateDevices this.devices[0] == undefined)';
             errMessage = 'veuillez connecter une caméra à votre machine et redémarrer l\'application.';
-            this.displayFrontError(errName, errMessage);
-            this.logError(errNameForLog, errMessage);
+            this.errorHandlerService.displayFrontError(errName, errMessage);
+            this.errorHandlerService.logError(errNameForLog, errMessage);
           }
         }, err => {
           errName = 'Erreur dans la récupération du flux vidéo';
           errNameForLog = errName + ' (enumerateDevices err)';
           errMessage = '';
-          this.displayFrontError(errName, errMessage);
-          this.logError(errNameForLog, errMessage, err);
+          this.errorHandlerService.displayFrontError(errName, errMessage);
+          this.errorHandlerService.logError(errNameForLog, errMessage, err);
         })
         .catch((err) => {
           errName = 'Aucune caméra détectée';
           errNameForLog = errName + ' (enumerateDevices err)';
           errMessage = 'veuillez connecter une caméra à votre machine et redémarrer l\'application.';
-          this.displayFrontError(errName, errMessage);
-          this.logError(errNameForLog, errMessage, err);
+          this.errorHandlerService.displayFrontError(errName, errMessage);
+          this.errorHandlerService.logError(errNameForLog, errMessage, err);
         });
       }
     }
@@ -208,8 +208,8 @@ export class CaptureComponent implements OnInit, AfterViewInit {
           errName = 'Erreur';
           errNameForLog = errName + ' (sendToIglooService response)';
           errMessage = 'la détection du visage n\'a pas pu aboutir.';
-          this.displayFrontError(errName, errMessage, 5000);
-          this.logError(errName, errMessage);
+          this.errorHandlerService.displayFrontError(errName, errMessage);
+          this.errorHandlerService.logError(errName, errMessage);
         }
         this.workInProgress = false;
       },
@@ -217,45 +217,11 @@ export class CaptureComponent implements OnInit, AfterViewInit {
         errName = 'Erreur';
         errNameForLog = errName + ' (sendToIglooService err)';
         errMessage = this.local ? 'serveur (local) non disponible' : 'serveur non disponible';
-        this.displayFrontError(errName, errMessage, 5000);
-        this.logError(errName, errMessage, err);
+        this.errorHandlerService.displayFrontError(errName, errMessage);
+        this.errorHandlerService.logError(errName, errMessage, err);
         this.workInProgress = false;
       });
     }
-  }
-
-  /**
-   * Affiche une erreur en front
-   *
-   * @param {string} customErrorName Le nom de l'erreur
-   * @param {string} customErrorMessage Le message de l'erreur
-   * @param {any} timeout Un éventuel timeout en ms pour cacher l'erreur
-   */
-  public displayFrontError(customErrorName: string, customErrorMessage: string, timeout?: number) {
-    const message = customErrorName + ' : ' + customErrorMessage;
-    this.displayedToast = this.snackBar.open(message, timeout ? '' : 'OK', {
-      duration: timeout ? timeout : 0,
-    });
-  }
-
-  /**
-   * Loggue une erreur
-   *
-   * @param {string} customErrorName Le nom de l'erreur
-   * @param {string} customErrorMessage Le message de l'erreur
-   * @param {any} error L'erreur catchée si disponible
-   */
-  public logError(customErrorName: string, customErrorMessage: string, error?: any) {
-    // @TODO : console.log à passer en _logger
-    console.log('*** logError ***');
-    console.log(customErrorName + ' : ' + customErrorMessage);
-    if (error) {
-      console.log(error);
-      if (error.name && error.message) {
-        console.log(error.name + ' : ' + error.message);
-      }
-    }
-    console.log('****************');
   }
 
   /**
