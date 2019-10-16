@@ -13,7 +13,7 @@ import { CustomSnackbarComponent } from 'src/app/shared/components/custom-snackb
 export class ErrorHandlerService {
 
   /**
-   *  Référence locale au Snackbar qui affiche les erreurs
+   * Référence locale au Snackbar qui affiche les erreurs
    */
   public snackBarRef: MatSnackBarRef<CustomSnackbarComponent>;
 

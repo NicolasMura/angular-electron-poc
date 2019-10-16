@@ -1,12 +1,13 @@
 <div class="capture__container" @fadeInOutAnimation>
-  <a mat-raised-button routerLink="/home">Go to home</a>
+  <a mat-raised-button routerLink="/home">Come back to home</a>
+  <a mat-raised-button routerLink="/advice">Go to advice</a>
 
   <div style="text-align: center;">
     <!-- <mat-grid-list cols="2" rowHeight="1:1" id="app"> -->
       <!-- <mat-grid-tile> -->
         <div style="position: relative;">
           <video #video id="video" width="640" height="480"></video>
-          <div *ngIf="isCameraLoading" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, 50%);z-index: 100000;background: red;color: white;">Loading...</div>
+          <div *ngIf="isCameraLoading" class="loading">Loading</div>
         </div>
         <!-- </mat-grid-tile> -->
         <!-- <mat-grid-tile> -->
@@ -44,15 +45,15 @@
             <mat-slide-toggle
             class="example-margin"
             [checked]="visagismeService.localServer"
-            [disabled]="toggleDisabled || workInProgress"
+            [disabled]="workInProgress"
             [(ngModel)]="visagismeService.localServer">
-            Mode local <span *ngIf="!visagismeService.localServer">OFF</span><span *ngIf="visagismeService.localServer">ON</span>
+            Serveur local <span *ngIf="!visagismeService.localServer">OFF</span><span *ngIf="visagismeService.localServer">ON</span>
           </mat-slide-toggle>
         </div>
 
         <div>
           <!-- <button (click)="sendToIgloo()">GO</button> -->
-          <button mat-raised-button color="primary" (click)="sendToIgloo()" [disabled]="!canSendForAnalyse || workInProgress" class="go_button">
+          <button mat-raised-button color="primary" (click)="sendToIgloo()" [disabled]="!visagismeService.canSendForAnalyse || workInProgress" class="go_button">
             <div *ngIf="!workInProgress">GO</div>
             <div *ngIf="workInProgress">
               <mat-progress-spinner

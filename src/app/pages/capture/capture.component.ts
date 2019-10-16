@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { fadeInOutAnimation } from 'src/app/shared/animations/fade-in-out';
 
+/**
+ * Page affichant la capture vidéo et permettant la prise de photo et l'envoi de la photo au serveur
+ */
 @Component({
   selector: 'app-capture',
   templateUrl: './capture.component.html',
@@ -12,18 +15,33 @@ import { fadeInOutAnimation } from 'src/app/shared/animations/fade-in-out';
   animations: [fadeInOutAnimation]
 })
 export class CaptureComponent implements OnInit, AfterViewInit {
+  /**
+   * Référence DOM vers l'élément HTML video
+   */
   @ViewChild('video', {static: true}) public video: ElementRef;
+  /**
+   * Référence DOM vers l'élément HTML canvas
+   */
   @ViewChild('canvas', {static: true}) public canvas: ElementRef;
-
+  /**
+   * Tableau des webcams disponibles
+   */
   public devices: any = [];
+  /**
+   * Webcam sélectionnée
+   */
   public selectedDevice: any = null;
-  public errorMessages: any[] = [];
+  /**
+   * La caméra est-elle en train de s'initialiser ?
+   */
   public isCameraLoading = true;
-
-  canSendForAnalyse = false;
-  toggleDisabled = false;
+  /**
+   * En attente du retour serveur ?
+   */
   workInProgress = false;
-
+  /**
+   * Souscription (peut mieux faire)
+   */
   subscription: Subscription;
 
   constructor(
@@ -32,6 +50,9 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     public errorHandlerService: ErrorHandlerService
   ) {}
 
+  /**
+   * Initialisation : test de disponibilité du serveur
+   */
   public ngOnInit() {
     let errName       = '';
     let errMessage    = '';
@@ -55,19 +76,20 @@ export class CaptureComponent implements OnInit, AfterViewInit {
         this.errorHandlerService.displayFrontError(errName, errMessage);
         this.errorHandlerService.logError(errNameForLog, errMessage, err);
       });
-
-    // récupération photo si dispo
-    this.subscription = this.visagismeService.getFaceAttributes().subscribe(capture => {
-      if ( capture ) {
-        this.canSendForAnalyse = true;
-      }
-    });
   }
 
+  /**
+   * Initialisation et affichage du flux vidéo
+   */
   public ngAfterViewInit() {
     this.showCamera();
   }
 
+  /**
+   * Affiche le flux vidéo de la webcam sélectionnée
+   *
+   * @param {any} device La webcam sélectionnée
+   */
   public showCamera(device?: any) {
     console.log('device : ', device);
 
@@ -94,12 +116,14 @@ export class CaptureComponent implements OnInit, AfterViewInit {
             case 'NotAllowedError':
               errName = 'Accès à la caméra refusée';
               errNameForLog = errName + ' (getUserMedia err)';
-              errMessage = 'il semble que votre système refuse l\'accès à votre caméra. Si vous êtes sur Mac OS X (à variabiliser), veuillez modifier vos préférences système (Security & Privacy > Privacy)';
+              errMessage = 'il semble que votre système refuse l\'accès à votre caméra. Si vous êtes sur Mac OS X (à variabiliser), \
+                veuillez modifier vos préférences système (Security & Privacy > Privacy)';
               break;
             case 'NotReadableError' || 'DOMException':
               errName = 'Accès à la caméra impossible';
               errNameForLog = errName + ' (getUserMedia err)';
-              errMessage = 'il semble que votre système refuse l\'accès à votre caméra. Si vous êtes sur Mac OS X (à variabiliser), veuillez modifier vos préférences système (Security & Privacy > Privacy)';
+              errMessage = 'il semble que votre système refuse l\'accès à votre caméra. Si vous êtes sur Mac OS X (à variabiliser), \
+                veuillez modifier vos préférences système (Security & Privacy > Privacy)';
               break;
             default:
               errName = 'Erreur inconnue';
@@ -150,18 +174,29 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public changeDevice(device: any) {
+  /**
+   * Change la webcam sélectionnée et affiche le flux vidéo correspondant
+   *
+   * @param {any} device La webcam sélectionnée
+   */
+  public changeDevice() {
     console.log('SelectedDevice : ', this.selectedDevice);
     this.showCamera(this.selectedDevice);
   }
 
+  /**
+   * Prend la photo, l'affiche dans le canvas au format base 64 et l'enregistre dans le service {@link VisagismeService}
+   */
   public takePicture() {
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
     // this.capture = this.canvas.nativeElement.toDataURL('image/jpg');
     this.visagismeService.capture = this.canvas.nativeElement.toDataURL('image/jpg');
-    this.canSendForAnalyse = true;
+    this.visagismeService.canSendForAnalyse = true;
   }
 
+  /**
+   * Envoie la photo au serveur pour analyse par l'API Igloo
+   */
   public sendToIgloo() {
     let errName       = '';
     let errMessage    = '';

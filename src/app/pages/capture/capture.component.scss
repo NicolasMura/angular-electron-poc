@@ -5,6 +5,40 @@
     background-color: #000000;
   }
 
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+    font-size: 30px;
+    color: white;
+    text-align: left;
+    width: 140px;
+  }
+
+  .loading:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4, end) 1100ms infinite;
+    animation: ellipsis steps(4, end) 1100ms infinite;
+    content: "..."; /* ascii code for the ellipsis character */
+    width: 0px;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.2em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.2em;
+    }
+  }
+
   #canvas {
     display: none;
   }

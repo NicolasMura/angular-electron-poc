@@ -6,21 +6,28 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VisagismeService {
-  localServer = false; // définit si le serveur API Igloo est local ou distant
-  capture = '';        // la photo prise au format base64
-  faceAttributes: any; // les attributs du visage détectés par l'API Igloo
+  /**
+   * Le serveur est-il local ou distant ?
+   */
+  localServer = false;
+  /**
+   * La photo utilisateur au format String (Base 64)
+   */
+  capture = '';
+  /**
+   * Les attributs du visage détectés par l'API Igloo
+   */
+  faceAttributes: any;
+  /**
+   * Définit si l'utilisateur peut envoyer sa photo ou non pour analyse
+   *
+   * False par défaut, passe à true si une photo (capture) a déjà été enregistrée
+   */
+  canSendForAnalyse = false;
 
   constructor(
     private http: HttpClient,
   ) {}
-
-  getCapture() {
-    return of(this.capture).pipe();
-  }
-
-  getFaceAttributes() {
-    return of(this.faceAttributes).pipe();
-  }
 
   /**
    * Service GET HTTP sur l'API Igloo
