@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { captureTest } from 'src/app/mocks/picture';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,11 @@ export class VisagismeService {
   /**
    * La photo utilisateur au format String (Base 64)
    */
-  capture = '';
+  capture = captureTest;
   /**
    * Les attributs du visage détectés par l'API Igloo
    */
   faceAttributes: any;
-  /**
-   * Définit si l'utilisateur peut envoyer sa photo ou non pour analyse
-   *
-   * False par défaut, passe à true si une photo (capture) a déjà été enregistrée
-   */
-  canSendForAnalyse = false;
 
   constructor(
     private http: HttpClient,

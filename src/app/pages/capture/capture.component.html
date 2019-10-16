@@ -25,7 +25,6 @@
           </div>
 
           <div>
-            <!-- <button id="snap" (click)="takePicture()">Snap Photo</button> -->
             <button id="snap" mat-raised-button color="primary" (click)="takePicture()" [disabled]="!selectedDevice || workInProgress">Prendre une photo</button>
           </div>
           <div>
@@ -33,11 +32,6 @@
           </div>
 
           <div>
-            <!-- <ul>
-              <li *ngFor="let c of captures">
-                <img src="{{ c }}" height="50" />
-              </li>
-            </ul> -->
             <img class="picture" src="{{ visagismeService.capture }}" height="50" />
           </div>
 
@@ -52,8 +46,7 @@
         </div>
 
         <div>
-          <!-- <button (click)="sendToIgloo()">GO</button> -->
-          <button mat-raised-button color="primary" (click)="sendToIgloo()" [disabled]="!visagismeService.canSendForAnalyse || workInProgress" class="go_button">
+          <button mat-raised-button color="primary" (click)="sendToIgloo()" [disabled]="workInProgress || !visagismeService.capture" class="go_button">
             <div *ngIf="!workInProgress">GO</div>
             <div *ngIf="workInProgress">
               <mat-progress-spinner

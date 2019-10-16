@@ -191,7 +191,6 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
     // this.capture = this.canvas.nativeElement.toDataURL('image/jpg');
     this.visagismeService.capture = this.canvas.nativeElement.toDataURL('image/jpg');
-    this.visagismeService.canSendForAnalyse = true;
   }
 
   /**
