@@ -8,22 +8,21 @@
         <div style="position: relative;">
           <video #video id="video" width="640" height="480"></video>
           <div *ngIf="isCameraLoading" class="loading">Loading</div>
-        </div>
-        <!-- </mat-grid-tile> -->
-        <!-- <mat-grid-tile> -->
-          <!-- <mat-select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" placeholder="Favorite food">
-            <mat-option *ngFor="let device of devices" [value]="device">
-              {{ device.label }}
-            </mat-option>
-          </mat-select> -->
           <div *ngIf="selectedDevice" class="select_devices">
-            <select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" [disabled]="workInProgress">
+            <mat-select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" placeholder="Select device">
+              <mat-option *ngFor="let device of devices" [value]="device">
+                {{ device.label }}
+              </mat-option>
+            </mat-select>
+            <!-- <select [(ngModel)]="selectedDevice" (change)="changeDevice($event)" [disabled]="workInProgress">
               <option *ngFor="let device of devices" [ngValue]="device">
                 {{ device.label }}
               </option>
-            </select>
+            </select> -->
           </div>
-
+        </div>
+        <!-- </mat-grid-tile> -->
+        <!-- <mat-grid-tile> -->
           <div>
             <button id="snap" mat-raised-button color="primary" (click)="takePicture()" [disabled]="!selectedDevice || workInProgress">Prendre une photo</button>
           </div>
