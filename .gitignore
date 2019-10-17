@@ -49,6 +49,9 @@ Thumbs.db
 # Generated Documentation with Compodoc
 /documentation
 
+# CSS
+*.css
+
 # Electron stuff
 electron/dist/
 release-builds/
