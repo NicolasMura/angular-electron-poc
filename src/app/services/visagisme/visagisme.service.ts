@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { captureTest } from 'src/app/mocks/picture';
 
@@ -14,15 +13,13 @@ export class VisagismeService {
   /**
    * La photo utilisateur au format String (Base 64)
    */
-  capture = captureTest;
+  capture = captureTest; // on peut utiliser captureTest comme mock
   /**
    * Les attributs du visage détectés par l'API Igloo
    */
   faceAttributes: any;
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /**
    * Service GET HTTP sur l'API Igloo

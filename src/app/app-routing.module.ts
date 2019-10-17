@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { HasUserFaceAttributesGuard } from './guards/has-user-face-attributes/has-user-face-attributes.guard';
 
 const routes: Routes = [
   {
@@ -22,7 +23,10 @@ const routes: Routes = [
   },
   {
     path: 'advice',
-    loadChildren: './pages/advice/advice.module#AdviceModule'
+    loadChildren: './pages/advice/advice.module#AdviceModule',
+    canActivate: [
+      HasUserFaceAttributesGuard
+    ]
   },
   {
     path: '**',
