@@ -11,7 +11,7 @@ import { MomentModule } from 'angular2-moment'; // optional, provides moment-sty
 import { HttpClientModule } from '@angular/common/http';
 import { DialogTimeoutComponent } from './services/idle/idle.service';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
-
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -31,8 +31,8 @@ import { CustomSnackbarComponent } from './shared/components/custom-snackbar/cus
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
-    NgIdleKeepaliveModule.forRoot()
-
+    NgIdleKeepaliveModule.forRoot(),
+    LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
   ],
   entryComponents: [DialogTimeoutComponent, CustomSnackbarComponent],
   providers: [],

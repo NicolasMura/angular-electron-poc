@@ -48,3 +48,7 @@ Thumbs.db
 
 # Generated Documentation with Compodoc
 /documentation
+
+# Electron stuff
+electron/dist/
+release-builds/

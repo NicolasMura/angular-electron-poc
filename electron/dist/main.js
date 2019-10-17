@@ -13,7 +13,7 @@ require('electron-reload')(path.join(__dirname, "/../../src"), {
 function createWindow() {
     // Create the browser window.
     win = new electron_1.BrowserWindow({
-        width: 1281,
+        width: 1280,
         height: 800,
         webPreferences: {
             nodeIntegration: true
@@ -23,7 +23,7 @@ function createWindow() {
     // win.loadFile('dist/angular-electron-poc/index.html')
     win.loadURL(url.format({
         pathname: path.join(__dirname, "/../../dist/angular-electron-poc/index.html"),
-        protocol: "file:",
+        protocol: 'file:',
         slashes: true
     }));
     // Open the DevTools.
