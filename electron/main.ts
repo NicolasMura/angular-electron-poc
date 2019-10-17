@@ -7,9 +7,10 @@ import * as url from 'url';
 let win: BrowserWindow;
 
 // Enable live reload for all the files inside your project directory and Electron too
-require('electron-reload')(path.join(__dirname, `/../../src`), {
-  electron: path.join(__dirname, `/../../node_modules/.bin/electron`)
-});
+// --> ne fonctionne pas...
+// require('electron-reload')(path.join(__dirname, `/../../src`), {
+//   electron: path.join(__dirname, `/../../node_modules/.bin/electron`)
+// });
 
 function createWindow() {
   // Create the browser window.
