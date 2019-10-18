@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { CustomSnackbarComponent } from 'src/app/shared/components/custom-snackbar/custom-snackbar.component';
 import { NGXLogger } from 'ngx-logger';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Service de gestion des erreurs
@@ -11,7 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorHandlerService {
+export class ErrorHandlerService implements ErrorHandler {
 
   /**
    * Référence locale au Snackbar qui affiche les erreurs
@@ -22,6 +23,17 @@ export class ErrorHandlerService {
     private snackBar: MatSnackBar,
     private logger: NGXLogger
   ) { }
+
+  /**
+   * Gestion globale custom des erreurs non catchées, basée sur l'implémentation de la classe ErrorHandler
+   *
+   * @param {Error | HttpErrorResponse} error L'erreur catchée
+   */
+  handleError(error: Error | HttpErrorResponse) {
+    this.logger.error('*** handleError ***');
+    this.logError('Erreur inconnue', error.message ? error.message : error.toString(), error);
+    this.logger.error('*******************');
+  }
 
   /**
    * Affiche une erreur en front

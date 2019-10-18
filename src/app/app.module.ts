@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { DialogTimeoutComponent } from './services/idle/idle.service';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from 'src/environments/environment';
+import { ErrorHandlerService } from './services/error-handler/error-handler.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import { environment } from 'src/environments/environment';
     }),
   ],
   entryComponents: [DialogTimeoutComponent, CustomSnackbarComponent],
-  providers: [],
+  providers: [
+    {provide: ErrorHandler, useClass: ErrorHandlerService}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

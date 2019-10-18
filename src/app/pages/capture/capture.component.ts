@@ -207,7 +207,6 @@ export class CaptureComponent implements OnInit, AfterViewInit {
       this.workInProgress = true;
 
       this.visagismeService.sendToIglooService(this.visagismeService.capture).then((response: any) => {
-        this.logger.debug(response);
         if (response.faceAttributes) {
           this.logger.debug(JSON.parse(response.faceAttributes));
           this.visagismeService.faceAttributes = JSON.parse(response.faceAttributes);
