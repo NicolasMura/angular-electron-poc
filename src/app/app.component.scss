@@ -1,5 +1,4 @@
 .root__container {
-
 	background-color: antiquewhite;
 
 	/*
@@ -13,10 +12,16 @@
 		display: flex;
 		justify-content: space-between;
 		box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
-		padding: 0 20px;
+		padding: 10px 20px;
 		height: 60px;
 		align-items: center;
 		animation: slidedown 0.5s ease-in-out, fadein 1s ease-in-out;
+
+		.left__section {
+			svg, img {
+				width: 50px;
+			}
+		}
 	}
 
 }

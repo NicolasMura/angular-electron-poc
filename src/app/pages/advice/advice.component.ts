@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { fadeInOutAnimation } from '../../shared/animations/fade-in-out';
 import { VisagismeService } from 'src/app/services/visagisme/visagisme.service';
 import { Subscription } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-advice',
@@ -15,10 +16,11 @@ export class AdviceComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public visagismeService: VisagismeService
+    public visagismeService: VisagismeService,
+    private logger: NGXLogger
   ) {
-    // console.log(visagismeService.capture);
-    console.log(visagismeService.faceAttributes);
+    // this.logger.debug(visagismeService.capture);
+    this.logger.debug(visagismeService.faceAttributes);
     if ( !visagismeService.faceAttributes ) {
       this.router.navigateByUrl('/capture');
     }
