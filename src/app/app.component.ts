@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   ) {
     // on récupère l'URL courante pour savoir si le menu doit être affiché et si le timeout d'inactivité doit être relancé
     this.router.events.subscribe((event: Event) => {
-      // console.log(event);
+      // this.logger.debug(event);
       if (event instanceof NavigationEnd) {
         this.logger.debug(router.url);
         if (router.url === '/screen-saver') {

@@ -3,6 +3,7 @@ import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 
 /**
  * Interface définissant le décompte en secondes de la période d'avertissement au bout de laquelle l'utilisateur est considéré comme inactif
@@ -65,6 +66,7 @@ export class IdleService {
     idle: Idle,
     public dialog: MatDialog,
     private router: Router,
+    private logger: NGXLogger
   ) {
 ​
     this.idle = idle;
@@ -75,15 +77,15 @@ export class IdleService {
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 ​
     this.idle.onIdleStart.subscribe(() => {
-      // console.log('Idle Start.');
+      // this.logger.debug('Idle Start.');
     });
 
     this.idle.onIdleEnd.subscribe(() => {
-      // console.log('onIdleEnd :');
+      // this.logger.debug('onIdleEnd :');
     });
 
     this.idle.onTimeoutWarning.subscribe((countdown: number) => {
-      console.log('You will time out in ' + countdown + ' seconds!');
+      this.logger.debug('You will time out in ' + countdown + ' seconds!');
       this.countdown$.next(countdown);
       if (countdown === dueTimeout) {
         this.idle.clearInterrupts();
@@ -94,7 +96,7 @@ export class IdleService {
     });
 
     this.idle.onTimeout.subscribe(() => {
-      console.log('Timed out!');
+      this.logger.debug('Timed out!');
       this.dialogRef.close('timeout');
       this.router.navigateByUrl('/screen-saver');
     });
@@ -119,7 +121,7 @@ export class IdleService {
   }
 ​
   watch() {
-    // console.log('Idle watch()');
+    // this.logger.debug('Idle watch()');
     this.stop();
     this.idle.setIdle(dueIdle);
     this.idle.watch();
@@ -132,8 +134,8 @@ export class IdleService {
     });
 
     this.dialogRef.afterClosed().subscribe((reason: string) => {
-      // console.log('The dialog was closed, reason : ');
-      // console.log(reason);
+      // this.logger.debug('The dialog was closed, reason : ');
+      // this.logger.debug(reason);
       // on ne relance le watcher que si on reste sur la page (= action utilisateur)
       if (reason !== 'timeout') {
         this.watch();

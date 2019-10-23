@@ -4,6 +4,7 @@ import { VisagismeService } from 'src/app/services/visagisme/visagisme.service';
 import { Subscription } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { fadeInOutAnimation } from 'src/app/shared/animations/fade-in-out';
+import { NGXLogger } from 'ngx-logger';
 
 /**
  * Page affichant la capture vidéo et permettant la prise de photo et l'envoi de la photo au serveur
@@ -47,7 +48,8 @@ export class CaptureComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     public visagismeService: VisagismeService,
-    public errorHandlerService: ErrorHandlerService
+    public errorHandlerService: ErrorHandlerService,
+    private logger: NGXLogger
   ) {}
 
   /**
@@ -61,7 +63,7 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     // test de disponibilité de l'API Igloo
     this.visagismeService.testIglooService()
       .then(response => {
-        // console.log(response);
+        // this.logger.debug(response);
       }, err => {
         errName = 'Erreur';
         errNameForLog = errName + ' (testIglooService err)';
@@ -91,7 +93,7 @@ export class CaptureComponent implements OnInit, AfterViewInit {
    * @param {any} device La webcam sélectionnée
    */
   public showCamera(device?: any) {
-    console.log('device : ', device);
+    this.logger.debug('device : ', device);
 
     let errName       = '';
     let errMessage    = '';
@@ -142,7 +144,7 @@ export class CaptureComponent implements OnInit, AfterViewInit {
         .then((devices) => {
           devices.forEach((deviceItem) => {
             if (deviceItem.kind === 'videoinput') {
-              // console.log(deviceItem.kind + ": " + deviceItem.label + ", id = " + deviceItem.deviceId);
+              // this.logger.debug(deviceItem.kind + ": " + deviceItem.label + ", id = " + deviceItem.deviceId);
               this.devices.push(deviceItem);
             }
           });
@@ -180,7 +182,7 @@ export class CaptureComponent implements OnInit, AfterViewInit {
    * @param {any} device La webcam sélectionnée
    */
   public changeDevice() {
-    console.log('SelectedDevice : ', this.selectedDevice);
+    this.logger.debug('SelectedDevice : ', this.selectedDevice);
     this.showCamera(this.selectedDevice);
   }
 
@@ -205,9 +207,8 @@ export class CaptureComponent implements OnInit, AfterViewInit {
       this.workInProgress = true;
 
       this.visagismeService.sendToIglooService(this.visagismeService.capture).then((response: any) => {
-        console.log(response);
         if (response.faceAttributes) {
-          console.log(JSON.parse(response.faceAttributes));
+          this.logger.debug(JSON.parse(response.faceAttributes));
           this.visagismeService.faceAttributes = JSON.parse(response.faceAttributes);
           this.router.navigateByUrl('/advice');
         } else {
