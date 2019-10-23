@@ -2,7 +2,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 
 import { HasUserFaceAttributesGuard } from './has-user-face-attributes.guard';
 
-describe('HasUserFaceAttributesGuard', () => {
+xdescribe('HasUserFaceAttributesGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [HasUserFaceAttributesGuard]
