@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     private logger: NGXLogger
   ) {
     // on récupère l'URL courante pour savoir si le menu doit être affiché et si le timeout d'inactivité doit être relancé
-    router.events.subscribe((event: Event) => {
+    this.router.events.subscribe((event: Event) => {
       // console.log(event);
       if (event instanceof NavigationEnd) {
         this.logger.debug(router.url);

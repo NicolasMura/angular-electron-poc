@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogTimeoutComponent } from './services/idle/idle.service';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,11 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     MatButtonModule,
     MatSnackBarModule,
     NgIdleKeepaliveModule.forRoot(),
-    LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/logs',
+      level: environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR
+    }),
   ],
   entryComponents: [DialogTimeoutComponent, CustomSnackbarComponent],
   providers: [],
